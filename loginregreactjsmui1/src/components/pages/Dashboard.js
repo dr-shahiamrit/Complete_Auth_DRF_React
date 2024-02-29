@@ -1,11 +1,21 @@
 import { Button, CssBaseline, Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ChangePassword from './auth/ChangePassword';
+import { removeToken } from '../../services/LocalStorageService';
+import { useDispatch } from 'react-redux';
+import { unSetUserToken } from '../../features/authSlice';
 
 const Dashboard = () => {
   const navigate = useNavigate()
+
+  //remove access token after log out also from redux
+  const dispach = useDispatch()
+
+
   const handleLogout = () => {
     console.log("Logout Clicked");
+    dispach(unSetUserToken({access_token: null}))
+    removeToken()
     navigate('/login')
   }
   return <>
